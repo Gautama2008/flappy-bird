@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="theme-color" content="#0f0c20">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>Flappy Bird</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=2.0" />
+</head>
+<body>
+
+<!-- Animated background blobs -->
+<div class="bg-blob blob-1"></div>
+<div class="bg-blob blob-2"></div>
+<div class="bg-blob blob-3"></div>
+
+<div id="gameContainer">
+  <canvas id="gameCanvas" width="400" height="600"></canvas>
+  
+  <!-- Start Screen -->
+  <div id="startScreen" class="screen">
+    <h1>🐦 Flappy Bird</h1>
+    <p>Klik atau tekan SPASI untuk terbang</p>
+    <p class="instruction">Hindari pipa dan raih skor tertinggi!</p>
+    <div class="coin-display">🪙 Koin: <span id="totalCoins">0</span></div>
+    <div class="btn-col">
+      <button id="startBtn" class="btn">Mulai Game</button>
+      <button id="adventureBtn" class="btn btn-green">🎮 Petualangan</button>
+      <button id="shopBtn" class="btn btn-gold">🛒 Shop</button>
+    </div>
+  </div>
+
+  <!-- Adventure Screen -->
+  <div id="adventureScreen" class="screen" style="display: none;">
+    <h1>🎮 Petualangan</h1>
+    <p class="instruction">Selesaikan setiap level untuk membuka level berikutnya!</p>
+    <div id="adventure-levels" class="adventure-grid"></div>
+    <button id="backAdventureBtn" class="btn btn-blue">← Kembali</button>
+  </div>
+
+  <!-- Shop Screen -->
+  <div id="shopScreen" class="screen" style="display: none;">
+    <h1>🛒 Bird Shop</h1>
+    <div class="coin-display">🪙 Koin: <span id="shopCoins">0</span></div>
+    
+    <!-- Tabs -->
+    <div class="shop-tabs">
+      <button class="tab-btn active" onclick="showTab('skins')">Skins</button>
+      <button class="tab-btn" onclick="showTab('accessories')">Accessories</button>
+    </div>
+    
+    <!-- Skins Tab -->
+    <div id="skins-tab" class="tab-content active">
+      <div class="shop-grid">
+      
+      <div class="skin-card" data-skin="classic">
+        <div class="skin-preview">
+          <canvas id="preview-classic" width="80" height="80"></canvas>
+        </div>
+        <div class="skin-name">Golden Canary</div>
+        <div class="skin-price">✅ Default</div>
+        <button class="btn-select selected">Digunakan</button>
+      </div>
+      
+      <div class="skin-card" data-skin="robin">
+        <div class="skin-preview">
+          <canvas id="preview-robin" width="80" height="80"></canvas>
+        </div>
+        <div class="skin-name">Robin Red</div>
+        <div class="skin-price">🪙 30</div>
+        <button class="btn-buy">Beli</button>
+      </div>
+      
+      <div class="skin-card" data-skin="bluebird">
+        <div class="skin-preview">
+          <canvas id="preview-bluebird" width="80" height="80"></canvas>
+        </div>
+        <div class="skin-name">Sky Bluebird</div>
+        <div class="skin-price">🪙 30</div>
+        <button class="btn-buy">Beli</button>
+      </div>
+      
+      <div class="skin-card" data-skin="parrot">
+        <div class="skin-preview">
+          <canvas id="preview-parrot" width="80" height="80"></canvas>
+        </div>
+        <div class="skin-name">Emerald Parrot</div>
+        <div class="skin-price">🪙 30</div>
+        <button class="btn-buy">Beli</button>
+      </div>
+      
+      <div class="skin-card" data-skin="owl">
+        <div class="skin-preview">
+          <canvas id="preview-owl" width="80" height="80"></canvas>
+        </div>
+        <div class="skin-name">Night Owl</div>
+        <div class="skin-price">🪙 30</div>
+        <button class="btn-buy">Beli</button>
+      </div>
+      
+      <div class="skin-card" data-skin="peacock">
+        <div class="skin-preview">
+          <canvas id="preview-peacock" width="80" height="80"></canvas>
+        </div>
+        <div class="skin-name">Peacock Royal</div>
+        <div class="skin-price">🪙 30</div>
+        <button class="btn-buy">Beli</button>
+      </div>
+      
+      <div class="skin-card" data-skin="flamingo">
+        <div class="skin-preview">
+          <canvas id="preview-flamingo" width="80" height="80"></canvas>
+        </div>
+        <div class="skin-name">Pink Flamingo</div>
+        <div class="skin-price">🪙 30</div>
+        <button class="btn-buy">Beli</button>
+      </div>
+      
+      <div class="skin-card" data-skin="penguin">
+        <div class="skin-preview">
+          <canvas id="preview-penguin" width="80" height="80"></canvas>
+        </div>
+        <div class="skin-name">Emperor Penguin</div>
+        <div class="skin-price">🪙 30</div>
+        <button class="btn-buy">Beli</button>
+      </div>
+      
+      <div class="skin-card" data-skin="phoenix">
+        <div class="skin-preview">
+          <canvas id="preview-phoenix" width="80" height="80"></canvas>
+        </div>
+        <div class="skin-name">Fire Phoenix</div>
+        <div class="skin-price">🪙 30</div>
+        <button class="btn-buy">Beli</button>
+      </div>
+      
+      </div>
+    </div>
+    
+    <!-- Accessories Tab -->
+    <div id="accessories-tab" class="tab-content">
+      <div class="acc-section">
+        <h3>🎩 Topi</h3>
+        <div class="acc-grid" id="hat-list"></div>
+      </div>
+      <div class="acc-section">
+        <h3>👓 Kacamata</h3>
+        <div class="acc-grid" id="glasses-list"></div>
+      </div>
+      <div class="acc-section">
+        <h3>🧣 Syal</h3>
+        <div class="acc-grid" id="scarf-list"></div>
+      </div>
+    </div>
+    
+    <button id="backBtn" class="btn btn-blue">← Kembali</button>
+  </div>
+
+  <!-- Game Over Screen -->
+  <div id="gameOverScreen" class="screen" style="display: none;">
+    <h1>💀 Game Over!</h1>
+    <p>Skor: <span id="finalScore">0</span></p>
+    <p>Best: <span id="bestScore">0</span></p>
+    <p class="coin-earned">+<span id="coinsEarned">0</span> 🪙</p>
+    <div class="btn-row">
+      <button id="restartBtn" class="btn btn-green">🔄 Main Lagi</button>
+      <button id="homeBtn" class="btn btn-blue">🏠 Beranda</button>
+    </div>
+  </div>
+
+  <!-- Score Display -->
+  <div id="scoreDisplay">0</div>
+</div>
+
+<script src="game.js?v=2.0"></script>
+</body>
+</html>
